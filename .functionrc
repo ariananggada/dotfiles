@@ -1,0 +1,178 @@
+vicd()
+{
+    local dst="$(command vifm --choose-dir - "$@")"
+    if [ -z "$dst" ]; then
+        echo 'Directory picking cancelled/failed'
+        return 1
+    fi
+    cd "$dst"
+}
+
+
+# Use lf to switch directories and bind it to ctrl-o
+lfcd() {
+    # tmp="$(mktemp)"
+    # cross compatibility for mac os x (Darwin) and Linux
+    tmp=$(mktemp 2>/dev/null || mktemp -t 'lfcd')
+    lf -last-dir-path="$tmp" "$@"
+    if [ -f "$tmp" ]; then
+        dir="$(cat "$tmp")"
+        rm -f "$tmp" >/dev/null
+        [ -d "$dir" ] && [ "$dir" != "$(pwd)" ] && cd "$dir"
+    fi
+}
+
+
+# # could produce error in larbs arch linux, should be commented
+# if [[ -t 0 && $- = *i* ]]; then
+#   if  [[ "${OS}" == "Darwin" ]]; then
+#     stty discard undef
+#     bind '"\017":"lfcd\n"'
+#   else
+#     bind '"\C-o":"lfcd\n"'
+#   fi
+# fi
+
+# bindkey -s '^o' 'lfcd\n'
+# bindkey -s '^a' 'bc -l\n'
+# bindkey -s '^f' 'cd "$(dirname "$(fzf)")"\n'
+# bindkey '^[[P' delete-char
+
+# # Edit line in vim with ctrl-e:
+# autoload edit-command-line; zle -N edit-command-line
+# bindkey '^e' edit-command-line
+
+ext() {
+  ext-all --exclude .git --exclude target --exclude "*.log"
+}
+
+ext-all() {
+  local name=$(basename $(pwd))
+  cd ..
+  tar -cvzf "$name.tgz" $* --exclude "$name.tgz" "$name"
+  cd -
+  mv ../"$name".tgz .
+}
+
+
+rg_vim() {
+  $EDITOR $(rg "$1" | sk | cut -d':' -f1)
+}
+
+rg_less() {
+  $EDITOR $(rg "$1" | sk | cut -d':' -f1)
+}
+
+# fh - repeat history
+fh() {
+  echo $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
+}
+
+vf() { 
+  local file
+  file=$(fd . -i --type file -H -E builds -E node_modules -E .git | fzf --no-multi)
+  $EDITOR "$file"
+}
+
+
+vfroot() { 
+  local file
+  file=$(fd . $HOME -i --type file -H -E builds -E node_modules -E .git | fzf --no-multi)
+  $EDITOR "$file"
+}
+
+# search file inside code dir and open on $EDITOR(vim)
+vfc() {
+  $EDITOR $(fd . code | sk) 
+}
+
+# vd() {
+#   local dir
+#   dir=$(find ${1:-.} -path '*/\.*' -prune -o -type d \
+#       -print 2> /dev/null | fzf --no-multi) &&
+#   cd "$dir"
+# }
+
+
+vd() {
+  local dir
+  dir=$(fd . -i --type directory -H -E builds -E node_modules -E .git | fzf --no-multi)
+  cd "$dir"
+}
+
+vdroot() {
+  local dir
+  dir=$(fd . $HOME -i --type directory -H -E builds -E node_modules -E .git | fzf --no-multi)
+  cd "$dir"
+}
+
+
+vtree() {
+  fd . -i -H -E builds -E node_modules -E .git | as-tree
+}
+
+cdf() {
+   local file
+   local dir
+   file=$(sk -q "$1") && dir=$(dirname "$file") && cd "$dir"
+}
+
+fkill() {
+  local pid
+  pid=$(ps -ef | sed 1d | sk | awk '{print $2}')
+
+  if [ "x$pid" != "x" ]
+  then
+    echo $pid | xargs kill -${1:-9}
+  fi
+}
+
+# fzf <3 tmux:)
+tm() {
+  [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
+  if [ $1 ]; then
+    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+  fi
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+}
+
+notify() {
+  if [ -z "$1" ]
+  then
+    echo "usage: $0 [bin_name]"
+  else
+    result=$( { $@ } 2>&1 )
+    ding && osascript -e "display notification \"$result\" with title \"$1\""
+  fi
+}
+
+countdown() {
+  if [[ -z "$1" ]]; then
+    echo "usage: countdown [time] (2500 are 25 minutes, 300 are 5 minutes)"
+    echo "example: countdown 2500 300"
+  elif [[ -z "$2" ]]; then
+    echo "usage: countdown [time] (2500 are 25 minutes, 300 are 5 minutes)"
+    echo "example: countdown 2500 300"
+  else
+    while [ true ]
+    do
+
+      # notify "countdown" "countdown start" && termdown.py $1 && reset;
+      # notify "countdown" "rest for five minutes" && reset && echo "rest for 5 minutes" && sleep $2;
+
+      termdown.py --title "work" $1 && reset && clear;
+      termdown.py --title "rest" $2 && reset && clear;
+    done
+  fi
+}
+
+multiclonegroup() {
+ ghorg clone $1 --base-url=http://repo.bkpm.go.id --scm=gitlab --token=AaX-g_My3qPEetTZppmN --preserve-dir -p .
+}
+
+if [ "$PLATFORM" = 'Darwin' ]; then
+  alias tac='tail -r'
+  o() {
+    open --reveal "${1:-.}"
+  }
+fi
