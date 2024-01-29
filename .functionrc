@@ -1,3 +1,9 @@
+myip()
+{
+  curl https://ipinfo.io/json
+}
+
+
 vicd()
 {
     local dst="$(command vifm --choose-dir - "$@")"

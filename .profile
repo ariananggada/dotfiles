@@ -117,9 +117,10 @@ if [[ "${OS}" == "Linux" ]] ||
     export PATH="$PATH:$GOBIN"
   fi
 
-  # java openjdk11
+  # java setup
   if [[ "${OS}" == "Darwin" ]]; then
-    export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk17/Contents/Home
+    # jdk17
+    export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk17/Contents/Home
   fi
 
   # doom emacs
