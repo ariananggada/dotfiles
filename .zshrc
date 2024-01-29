@@ -1,6 +1,8 @@
 eval "$(starship init zsh)"
 source /opt/local/share/fzf/shell/key-bindings.zsh
 source /opt/local/share/fzf/shell/completion.zsh
+source /opt/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 autoload -U colors && colors
 if [ -f "$HOME/.profile" ]; then
