@@ -1,0 +1,124 @@
+# aliasi
+alias c='clear;reset'
+alias e=$EDITOR
+alias ll='ls -lah'
+alias llt='ls -laht'
+alias l='ls -aF'
+alias grep='GREP_COLOR="1;33;40" LANG=C grep --exclude-dir=node_modules --color=auto'
+alias clr='clear;reset;tmux clear-history'
+alias ..='cd ..'
+alias ...='cd ../../'
+alias ....='cd ../../../'
+
+# git alias
+if command -v "git"> /dev/null 2>&1; then
+  alias gst="git status"
+  alias grv="git remote -v"
+  alias gba="git branch -a"
+  alias gv='git log --graph --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+  alias glog='git log --decorate --stat -v'
+  alias ga="git add"
+  alias gco="git checkout"
+  alias gre="git restore"
+  alias gcm="git commit"
+  alias gps="git push"
+  alias gpl="git pull"
+  alias gfe="git fetch"
+  alias gpdob="git push -d origin "
+  alias gbd="git branch -D "
+  alias gplop="git pull origin --prune"
+  alias gfeop="git fetch origin --prune"
+  alias mgpl='find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;'
+  alias glv='git log --graph --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+  alias multipull="find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull \;"
+  alias multifetch="find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} fetch \;"
+  alias multicheckoutmaster="find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} checkout master \;"
+  alias multicheckoutstaging="find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} checkout staging \;"
+  alias multicheckoutrelease="find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} checkout release \;"
+  alias multicheckout="multipull&&multifetch&&multicheckoutmaster&&multicheckoutstaging&&multicheckoutrelease"
+fi
+
+# nvm alias
+if command -v "nvm"> /dev/null 2>&1; then
+  alias nvmup='nvm install --lts --reinstall-packages-from=node'
+fi
+
+# tmux alias
+if command -v "tmux"> /dev/null 2>&1; then
+  alias tat='tmux new -s `basename $PWD`'
+  # Force tmux to assume the terminal supports 256 colours.
+  alias tmux='tmux -2'
+fi
+
+## productivity alias
+# print all files and size in current directory and sort them by size
+if command -v fd > /dev/null; then
+  alias sortbigfile='fd . -x du -h {} \; | sort -r'
+else
+  alias sortbigfile='find . -type f -exec du -h {} \; | sort -r'
+fi
+
+
+# scratch file
+if [ -d "$HOME/tmp" ]; then
+  SCRATCH_FILE="$HOME"/tmp/scratch.md
+  if [ -e "$HOME/tmp/scratch.md" ]; then
+    alias scratch='$EDITOR "$SCRATCH_FILE"'
+  else
+    touch "$SCRATCH_FILE"
+  fi
+fi
+
+
+# # docker
+if command -v "docker" > /dev/null 2>&1; then
+  alias dps='docker ps -a'
+  alias di='docker images -a'
+  alias dv='docker volume ls'
+  alias dn='docker network ls'
+  alias sprune='docker system prune'
+  alias vprune='docker volume prune'
+
+  # # using docker-machine start default first
+  # # disabled for now
+  # if command -v "docker-machine" > /dev/null 2>&1; then
+  #   eval "$(docker-machine env default)"
+  # fi
+fi
+
+# # kubernetes kubectl
+if command -v "kubectl" > /dev/null 2>&1; then
+  alias kgn='kubectl get namespace -o wide'
+  alias kgp='kubectl get pods -A -o wide'
+  alias kgs='kubectl get svc -A -o wide'
+fi
+
+# ssh serveraliveinterval
+alias ssh='ssh -o "ServerAliveInterval 60"'
+
+# universal UNIX clipboard and open command
+if  [[ "${OS}" == "Linux" ]] ||
+    [[ "${OS}" == "OpenBSD" ]] ||
+    [[ "${OS}" == "FreeBSD" ]] ; then
+  alias pbcopy='xclip -selection clipboard'
+  alias pbpaste='xclip -selection clipboard -o'
+  alias open='xdg-open'
+
+elif [[ "${OS}" == "MINGW*" ]]; then
+  alias pbcopy='clip'
+  alias open='cmd /c start'
+
+elif [[ "${OS}" == "CYGWIN*" ]]; then
+  alias pbcopy='clip'
+fi
+
+# # add checking if exa exists
+alias xl="exa --group-directories-first --classify --git"
+alias xll="xl -lah"
+
+## add checking if skim exists
+alias skvim='f(){ x="$(sk --bind "ctrl-p:toggle-preview" --ansi --preview="preview.sh -v {}" --preview-window=up:50%:hidden)"; [[ $? -eq 0 ]] && nvim "$x" || true }; f'
+export SKIM_DEFAULT_OPTS='--color "preview-bg:237"'
+if [ -e "/opt/local/share/skim/shell" ]; then
+  source /opt/local/share/skim/shell
+fi
