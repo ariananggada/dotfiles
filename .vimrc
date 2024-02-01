@@ -30,7 +30,7 @@ silent! if plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-commentary'
-  Plug 'tpope/vim-eunuch'
+  " Plug 'tpope/vim-eunuch'
   Plug 'tpope/vim-repeat'
 
   Plug 'tpope/vim-markdown'
