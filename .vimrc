@@ -57,6 +57,14 @@ silent! if plug#begin('~/.vim/plugged')
   Plug 'junegunn/gv.vim'
   Plug 'junegunn/goyo.vim'
 
+  Plug 'SirVer/ultisnips'
+  let g:UltiSnipsExpandTrigger = '<Nop>'
+  let g:UltiSnipsJumpForwardTrigger = '<Nop>'
+  let g:UltiSnipsJumpBackwardTrigger = '<Nop>'
+  let g:UltiSnipsEditSplit = 'vertical'
+
+  Plug 'honza/vim-snippets'
+
   Plug 'airblade/vim-gitgutter'
 
   Plug 'preservim/nerdtree'
@@ -150,10 +158,10 @@ if has ('folding')
   setglobal foldopen+=jump
 endif
 
-" setglobal commentstring=#\ %s
-" if !get(v:, 'vim_did_enter', !has('vim_starting'))
-"   setlocal commentstring<
-" endif
+setglobal commentstring=#\ %s
+if !get(v:, 'vim_did_enter', !has('vim_starting'))
+  setlocal commentstring<
+endif
 
 set splitbelow
 set splitright
