@@ -47,7 +47,7 @@ silent! if plug#begin('~/.vim/plugged')
 
   " tagbar
   Plug 'preservim/tagbar', { 'on': 'TagbarToggle' }
-  let g:tagbar_sort=0  
+  let g:tagbar_sort=0
 
   " colors
   Plug 'morhetz/gruvbox'
@@ -158,10 +158,10 @@ if has ('folding')
   setglobal foldopen+=jump
 endif
 
-setglobal commentstring=#\ %s
-if !get(v:, 'vim_did_enter', !has('vim_starting'))
-  setlocal commentstring<
-endif
+" setglobal commentstring=#\ %s
+" if !get(v:, 'vim_did_enter', !has('vim_starting'))
+"   setlocal commentstring<
+" endif
 
 set splitbelow
 set splitright
@@ -173,7 +173,7 @@ set mouse=a
 
 set modelines=2
 set formatoptions+=rno1l
-set synmaxcol=200
+set synmaxcol=240
 set linebreak
 set nowrap
 
@@ -416,7 +416,7 @@ cnoremap w!! w !sudo tee % >/dev/null
 
 
 " {{{ coc.nvim config
-if v:version >= 800 && exists(':CocList')
+if v:version >= 800 && &runtimepath =~ 'coc.nvim'
   let g:coc_global_extensions = [
         \ 'coc-snippets',
         \ 'coc-pairs',
