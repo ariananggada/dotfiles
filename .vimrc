@@ -431,7 +431,8 @@ if v:version >= 800 && &runtimepath =~ 'coc.nvim'
         \ 'coc-vimtex',
         \ 'coc-prettier',
         \ 'coc-yaml',
-        \ 'coc-svelte'
+        \ 'coc-svelte',
+        \ 'coc-clangd'
         \ ]
 
   " Use tab for trigger completion with characters ahead and navigate
