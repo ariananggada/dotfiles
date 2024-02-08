@@ -425,14 +425,19 @@ if v:version >= 800 && &runtimepath =~ 'coc.nvim'
         \ 'coc-html',
         \ 'coc-eslint',
         \ 'coc-css',
+        \ 'coc-vimlsp',
         \ 'coc-pyright',
         \ 'coc-rust-analyzer',
         \ 'coc-go',
         \ 'coc-vimtex',
         \ 'coc-prettier',
         \ 'coc-yaml',
+        \ 'coc-xml',
+        \ 'coc-zig',
         \ 'coc-svelte',
-        \ 'coc-clangd'
+        \ 'coc-clangd',
+        \ 'coc-tailwindcss',
+        \ 'coc-tailwindcss3'
         \ ]
 
   " Use tab for trigger completion with characters ahead and navigate
