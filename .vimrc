@@ -436,8 +436,7 @@ if v:version >= 800 && &runtimepath =~ 'coc.nvim'
         \ 'coc-zig',
         \ 'coc-svelte',
         \ 'coc-clangd',
-        \ 'coc-tailwindcss',
-        \ 'coc-tailwindcss3'
+        \ 'coc-tailwindcss'
         \ ]
 
   " Use tab for trigger completion with characters ahead and navigate
