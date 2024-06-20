@@ -1,0 +1,322 @@
+" VIMRC
+
+" Environment Variables {{{
+let $RTP=split(&runtimepath, ',')[0]
+"" let $VIMRC="$HOME/.vim/vimrc"
+"" let $KP_DIR="$HOME/profile.d/util/vim/keywordprg"
+" }}}
+
+" Variable assignment {{{
+" }}}
+
+" Basics {{{
+filetype plugin indent on         " Add filetype, plugin, and indent support
+syntax on                         " Turn on syntax highlighting
+"}}}
+
+" Settings {{{
+" set number
+set backspace=indent,eol,start    " Backspace everything in insert mode
+set formatoptions=tcroql          " Auto-wrap comments
+set wildmenu                      " Display matches in command-line mode
+set ts=4
+set sw=4
+set softtabstop=4
+set expandtab                     " Prefer spaces over tabs in general
+set hlsearch
+set wildmode=longest,list
+set hidden                        " Prefer hiding over unloading buffers
+set wildcharm=<C-z>               " Macro-compatible command-line wildchar
+set path=.,**                     " Relative to current file and everything under :pwd
+setl wildignore=**/node_modules/**,**/dist/**,*.pyc
+set noswapfile                    " Disables swapfiles
+set tags=./tags;,tags;            " Find tags relative to current file and directory
+
+if exists('&colorcolumn')
+    set colorcolumn=80
+endif
+" }}}
+
+" Mappings {{{
+" Self-explanatory convenience mappings
+"
+nnoremap <SPACE> <Nop>
+let mapleader=" "
+nnoremap <Leader>q :quit<CR>
+nnoremap <Leader>w :update<CR>
+
+"" try
+""   nnoremap ,n :NERDTreeToggle<CR>
+"" catch
+""   echo 'nerdtree error'
+""   nnoremap ,n :Lex<CR>
+"" endtry
+
+"" nnoremap ,n :Lex<CR>
+nnoremap ,n :Ntree<CR>
+
+inoremap jk <Esc>
+nnoremap <C-k> <C-p>
+nnoremap <C-p> <Up>$
+inoremap <C-j> <CR><C-o>O<C-t>
+inoremap <C-d> <Del>
+"" vnoremap ; :
+"" vnoremap : ;
+"" nnoremap ; :
+"" nnoremap : ;
+
+" indent mapping(moving lines)
+xnoremap < <gv
+xnoremap > >gv
+
+" Re-detect filetype
+nnoremap <leader>t :filetype detect<CR>
+" Visually select pasted or yanked text
+nnoremap gV `[v`]
+
+" " Toggle Paste mode
+" nnoremap <leader>p :set paste!<CR>
+
+" Buffer Navigation, Fast switching to the alternate file
+nnoremap <BS> :buffer#<CR>
+nnoremap ]b :bnext<CR>
+nnoremap ]b :bprev<CR>
+nnoremap <Leader>s :SC<CR>
+nnoremap <Leader>d :bd!<CR>
+
+" " Black hole deletes
+"nnoremap <leader>d "_d
+"
+" Command-line hjkl-style forward-search
+cnoremap <C-k> <Up>
+" Command-line hjkl-style reverse-search
+cnoremap <C-j> <Down>
+
+" Highlight pasted text
+nnoremap <expr> gp '`[' . getregtype()[0] . '`]'
+" Often utilize vertical splits
+cnoreabbrev v vert
+" Quit out of ex-mode faster
+cnoreabbrev vv visual
+" Fast global commands
+nnoremap ,g :g//#<Left><Left>
+" Join yanked text on a yank (needed for terminal mode copies)
+vnoremap <silent> yy y<CR>:call Osc52Yank()<CR>
+" Reload snippet configuration files
+nnoremap <C-s> :call UltiSnips#RefreshSnippets()<CR>
+" Make the directory for which the current file should be in
+nnoremap ,m :!mkdir -p %:h<CR>
+
+" Bindings for more efficient path-based file navigation
+nnoremap ,f :find *
+nnoremap ,v :vert sfind *
+nnoremap ,F :find <C-R>=fnameescape(expand('%:p:h')).'/**/*'<CR>
+nnoremap ,V :vert sfind <C-R>=fnameescape(expand('%:p:h')).'/**/*'<CR>
+
+" Argslist navigation
+nnoremap [a :previous<CR>
+nnoremap ]a :next<CR>
+nnoremap [A :first<CR>
+nnoremap ]A :last<CR>
+
+" Quickfix list navigation
+nnoremap [q :cp<CR>
+nnoremap ]q :cn<CR>
+
+" Useful for accessing commonly-used files
+nnoremap <leader>b :e $HOME/.bashrc<CR>
+nnoremap <leader>r :e $RTP<CR>
+nnoremap <leader>v :e $VIMRC<CR>
+nnoremap <leader>f :e <C-R>='$RTP/after/ftplugin/'.&filetype.'.vim'<CR><CR>
+nnoremap <leader>s :UltiSnipsEdit<CR>
+
+" read file at current cursor position
+nnoremap ,r :read <cfile><CR>
+
+" Window management
+nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 6/5)<CR>
+nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 5/6)<CR>
+
+" Access file data
+cnoremap \fp <C-R>=expand("%:p:h")<CR>
+inoremap \fp <C-R>=expand("%:p:h")<CR>
+cnoremap \fn <C-R>=expand("%:t:r")<CR>
+inoremap \fn <C-R>=expand("%:t:r")<CR>
+cnoremap \ft <C-R>=strftime("%c")<CR>
+inoremap \ft <C-R>=strftime("%c")<CR>
+
+" write as super user
+cnoremap w!! w !sudo tee % >/dev/null
+
+" used for wikis
+" dangerous, this map change gf original binding in vim
+" if file not found, create file instead
+nnoremap <Leader>ef :split %:h/<cfile><CR>
+
+" Markdown headings
+nnoremap <Leader>1 m`yypVr=``
+nnoremap <Leader>2 m`yypVr-``
+nnoremap <Leader>3 m`^i### <Esc>``4l
+nnoremap <Leader>4 m`^i#### <Esc>``5l
+nnoremap <Leader>5 m`^i##### <Esc>``6l
+
+
+" Kill bad habits
+" noremap h <nop>
+" noremap j <nop>
+" noremap k <nop>
+" noremap l <nop>
+
+cnoremap <expr> <CR> cmdline#AutoComplete()
+
+" Scratch Buffer
+command! SC vnew | setlocal nobuflisted buftype=nofile bufhidden=wipe noswapfile
+
+" CDC = Change to Directory of Current file
+command CDC cd %:p:h
+
+"" Make
+" nnoremap <Bslash> :silent make <bar> redraw!<CR>
+"" }}}
+
+" {{{ Autocommands
+
+" general autocommand
+augroup vimrc
+  autocmd!
+  autocmd VimEnter * hi Normal ctermbg=none
+  au BufWritePost vimrc,.vimrc nested if expand('%') !~ 'fugitive' | source % | endif
+  " Disables automatic commenting on newline:
+  autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+augroup END
+
+" Create file-marks for commonly edited file types
+augroup FileMarks
+  autocmd!
+  autocmd BufLeave *.html normal! mH
+  autocmd BufLeave *.go   normal! mG
+  autocmd BufLeave *.snippets normal! mS
+  autocmd BufLeave *.js   normal! mJ
+  autocmd BufLeave *.ts   normal! mT
+  autocmd BufLeave *.vim  normal! mV
+	autocmd BufLeave *.sol  normal! mO
+  autocmd BufLeave *.bzl  normal! mB
+augroup END
+" }}}
+
+" Neovim {{{
+if has("nvim")
+  " Terminal mode:
+  autocmd TermOpen * startinsert
+
+  " Prefer h-j-k-l mode-agnostic means of switching windows
+  tnoremap <M-h> <c-\><c-n><c-w>h
+  tnoremap <M-j> <c-\><c-n><c-w>j
+  tnoremap <M-k> <c-\><c-n><c-w>k
+  tnoremap <M-l> <c-\><c-n><c-w>l
+  inoremap <M-h> <Esc><c-w>h
+  inoremap <M-j> <Esc><c-w>j
+  inoremap <M-k> <Esc><c-w>k
+  inoremap <M-l> <Esc><c-w>l
+  vnoremap <M-h> <Esc><c-w>h
+  vnoremap <M-j> <Esc><c-w>j
+  vnoremap <M-k> <Esc><c-w>k
+  vnoremap <M-l> <Esc><c-w>l
+  nnoremap <M-h> <c-w>h
+  nnoremap <M-j> <c-w>j
+  nnoremap <M-k> <c-w>k
+  nnoremap <M-l> <c-w>l
+
+	tnoremap jj <C-\><C-n>
+
+	" nr2char({expr}) returns string with value {expr}
+	" Equivalent to <C-\><C-n>"[reg]pi: paste the contents of [reg]
+	tnoremap <expr> <C-v> '<C-\><C-N>"'.nr2char(getchar()).'pi'
+
+endif
+" }}}
+
+" " Snippets {{{
+" let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+" let g:UltiSnipsExpandTrigger = "<tab>"
+" let g:UltiSnipsJumpForwardTrigger = "<tab>"
+" let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+" Use carriage returns as a surround character
+let g:surround_13 = "\n\t\r\n"
+
+" " Sometimes UltiSnips does not auto reload snippets
+" cnoreabbrev resnip call UltiSnips#RefreshSnippets() 
+" nnoremap <leader>u :UltiSnipsEdit!<CR>
+" " }}}
+
+function! HandleURL()
+  let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;]*')
+  echo s:uri
+  if s:uri != ""
+    silent exec "!open '".s:uri."'"
+  else
+    echo "No URI found in line."
+  endif
+endfunction
+nnoremap <leader>u :call HandleURL()<cr>
+
+" open file
+function! s:open(...) abort
+  if has('win32')
+    let cmd = 'start'
+  elseif executable('xdg-open')
+    let cmd = 'xdg-open'
+  else
+    let cmd = 'open'
+  endif
+  if !empty(v:servername) && !has('win32')
+    let cmd = 'env VISUAL="vim --servername '.v:servername.'" '.cmd
+  endif
+  let args = a:0 ? copy(a:000) : [get(b:, 'url', '%:p')]
+  if type(args[0]) == type(function('tr'))
+    let args[0] = call(args[0], [{}], {})
+  endif
+  call map(args, 'shellescape(expand(v:val))')
+  return 'echo ' . string(system(cmd . ' ' . join(args, ' '))[0:-2])
+endfunction
+command! -nargs=* -complete=file O :exe s:open(<f-args>)
+
+" chmod
+command! EX if !empty(expand('%'))
+      \|   write
+      \|   call system('chmod +x '.expand('%'))
+      \|   silent e
+      \| else
+        \|   echohl WarningMsg
+        \|   echo 'Save the file first'
+        \|   echohl None
+        \| endif
+
+" :Root | Change directory to the root of the Git repository
+function! s:root()
+  let root = systemlist('git rev-parse --show-toplevel')[0]
+  if v:shell_error
+    echo 'Not in git repo'
+  else
+    execute 'lcd' root
+    echo 'Changed directory to: '.root
+  endif
+endfunction
+command! Root call s:root()
+
+" Status line {{{
+function! s:statusline_expr()
+  let mod = "%{&modified ? '[+] ' : !&modifiable ? '[x] ' : ''}"
+  let ro  = "%{&readonly ? '[RO] ' : ''}"
+  let ft  = "%{len(&filetype) ? '['.&filetype.'] ' : ''}"
+  let fug = "%{exists('g:loaded_fugitive') ? fugitive#statusline() : ''}"
+  let sep = ' %= '
+  let pos = ' %-12(%l : %c%V%) '
+  let pct = ' %P'
+
+  return '[%n] %F %<'.mod.ro.ft.fug.sep.pos.'%*'.pct
+endfunction
+let &statusline = s:statusline_expr()
+" }}}
+
