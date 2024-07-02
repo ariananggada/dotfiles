@@ -139,6 +139,9 @@ if [[ "${OS}" == "Linux" ]] ||
     export PATH="/opt/local/bin:/opt/local/sbin:$PATH" 
   fi
 
+  if [[ "${OS}" == "Darwin" ]]; then
+    export PATH="$HOME/Library/Python/3.10/bin:$PATH"
+  fi
 
 fi
 
