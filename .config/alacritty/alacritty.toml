@@ -30,14 +30,14 @@ white   = '#d4be98'
 [font]
 size = 12
   [font.normal]
-  family = "SauceCodePro Nerd Font"
+  family = "Monaco Nerd Font"
   style = "Regular"
 
   [font.bold]
-  family = "SauceCodePro Nerd Font"
+  family = "Monaco Nerd Font"
   style = "Bold"
 
   [font.italic]
-  family = "SauceCodePro Nerd Font"
+  family = "Monaco Nerd Font"
   style = "Italic"
 
