@@ -1,4 +1,4 @@
-# aliasi
+# alias
 alias c='clear;reset'
 alias e=$EDITOR
 alias ll='ls -lah'
@@ -9,6 +9,12 @@ alias clr='clear;reset;tmux clear-history'
 alias ..='cd ..'
 alias ...='cd ../../'
 alias ....='cd ../../../'
+
+# backup alias
+alias rbi='rsync -avzrhP --exclude=node_modules'
+
+# c compiler alias
+alias myccompile='clang -Wall -Wextra -Werror -O2 -std=c99 -pedantic'
 
 # git alias
 if command -v "git"> /dev/null 2>&1; then
@@ -115,6 +121,9 @@ fi
 # # add checking if exa exists
 alias xl="exa --group-directories-first --classify --git"
 alias xll="xl -lah"
+
+# xattr mac app solve
+alias fixapp="xattr -c "
 
 ## add checking if skim exists
 alias skvim='f(){ x="$(sk --bind "ctrl-p:toggle-preview" --ansi --preview="preview.sh -v {}" --preview-window=up:50%:hidden)"; [[ $? -eq 0 ]] && nvim "$x" || true }; f'

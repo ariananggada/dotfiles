@@ -182,3 +182,11 @@ if [ "$PLATFORM" = 'Darwin' ]; then
     open --reveal "${1:-.}"
   }
 fi
+
+# pf() {
+#   fzf --preview='less {}' --bind shift-up:preview-page-up,shift-down:preview-page-down
+# }
+
+pf() {
+  fzf --preview "bat --color=always --style=numbers --line-range=:500 {}"
+}

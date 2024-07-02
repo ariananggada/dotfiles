@@ -117,7 +117,8 @@ endif
 " Basic settings {{{
 filetype plugin indent on
 set encoding=utf-8
-set relativenumber
+set number
+set norelativenumber
 set textwidth=0
 if exists('&colorcolumn')
   set colorcolumn=80
@@ -409,6 +410,12 @@ inoremap \ft <C-R>=strftime("%c")<CR>
 
 " write as super user
 cnoremap w!! w !sudo tee % >/dev/null
+
+" goyo toggle
+nnoremap <Leader>g :Goyo<CR>
+
+" search in root project directory
+nnoremap \r :Rg<CR>
 " }}}
 
 
