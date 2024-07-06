@@ -36,6 +36,9 @@ silent! if plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-markdown'
   let g:markdown_syntax_conceal = 0
 
+  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() },
+  \   'for': ['markdown', 'vim-plug']}
+
   Plug 'AndrewRadev/splitjoin.vim'
   let g:splitjoin_split_mapping = ''
   let g:splitjoin_join_mapping = ''
