@@ -151,10 +151,10 @@ set title
 set nobackup
 set nowritebackup
 set noswapfile
-if has('persistent_undo')
-  set undodir=/tmp,.
-  set undofile
-endif
+" if has('persistent_undo')
+"   set undodir=/tmp,.
+"   set undofile
+" endif
 set cmdheight=2
 
 if has ('folding')
