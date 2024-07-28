@@ -22,3 +22,10 @@ if [ -f "$HOME/.functionrc" ]; then
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# fnm
+FNM_PATH="/Users/arian/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="/Users/arian/.local/share/fnm:$PATH"
+  eval "`fnm env`"
+fi
