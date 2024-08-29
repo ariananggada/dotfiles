@@ -124,7 +124,7 @@ set number
 set norelativenumber
 set textwidth=0
 if exists('&colorcolumn')
-  set colorcolumn=80
+  set colorcolumn=74
 endif
 set backspace=indent,eol,start
 set list
