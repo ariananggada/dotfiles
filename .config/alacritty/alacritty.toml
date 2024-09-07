@@ -28,16 +28,16 @@ cyan    = '#89b482'
 white   = '#d4be98'
 
 [font]
-size = 12
+size = 14
   [font.normal]
-  family = "Monaco Nerd Font"
+  family = "Menlo Nerd Font"
   style = "Regular"
 
   [font.bold]
-  family = "Monaco Nerd Font"
+  family = "Menlo Nerd Font"
   style = "Bold"
 
   [font.italic]
-  family = "Monaco Nerd Font"
+  family = "Menlo Nerd Font"
   style = "Italic"
 
