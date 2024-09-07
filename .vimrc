@@ -27,6 +27,7 @@ set runtimepath^=$HOME/.vim runtimepath+=$HOME/.vim/after
 
 " Vim Package {
 silent! if plug#begin('~/.vim/plugged')
+  Plug 'tpope/vim-sensible'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-commentary'
@@ -35,6 +36,11 @@ silent! if plug#begin('~/.vim/plugged')
 
   Plug 'tpope/vim-markdown'
   let g:markdown_syntax_conceal = 0
+
+  Plug 'tpope/vim-sleuth'
+  Plug 'tpope/vim-dispatch'
+  Plug 'tpope/vim-speeddating'
+  Plug 'tpope/vim-vinegar'
 
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() },
   \   'for': ['markdown', 'vim-plug']}
@@ -59,6 +65,7 @@ silent! if plug#begin('~/.vim/plugged')
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/gv.vim'
   Plug 'junegunn/goyo.vim'
+  Plug 'junegunn/vim-easy-align'
 
   Plug 'SirVer/ultisnips'
   let g:UltiSnipsExpandTrigger = '<Nop>'
@@ -416,6 +423,13 @@ cnoremap w!! w !sudo tee % >/dev/null
 
 " goyo toggle
 nnoremap <Leader>g :Goyo<CR>
+
+" vim-easy-align
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 " search in root project directory
 nnoremap \r :Rg<CR>
