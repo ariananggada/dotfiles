@@ -57,6 +57,7 @@ silent! if plug#begin('~/.vim/plugged')
   " tagbar
   Plug 'preservim/tagbar', { 'on': 'TagbarToggle' }
   let g:tagbar_sort=0
+  let g:tagbar_ctags_bin='/opt/local/bin/uctags'
 
   " colors
   Plug 'morhetz/gruvbox'
@@ -261,7 +262,7 @@ if has('gui_running')
   set background=dark
   try
     if has('mac')
-      set guifont=JetBrains Mono NL:h12
+      set guifont=Menlo Nerd Font:h14
       " set guifont=TamzenForPowerline:h14
       " set guifont=IBM Plex Mono:h12
       " set guifont=Cousine:h11
@@ -271,7 +272,7 @@ if has('gui_running')
       " set guifont=Inconsolata:h14
       " set guifont=Monaco:h11
     elseif has('win32')
-      set guifont=JetBrains_Mono_NL:h12:cANSI:qDRAFT
+      set guifont=Menlo_Nerd_Font:h14:cANSI:qDRAFT
       " set guifont=TamzenForPowerline:h14:cANSI:qDRAFT
       " set guifont=IBM_Plex_Mono:h12:cANSI:qDRAFT
       " set guifont=Monego_Nerd_Font_Fix:h11:cANSI:qDRAFT
@@ -284,7 +285,7 @@ if has('gui_running')
       " set guifont=Cousine:h10:cANSI:qDRAFT
       " set guifont=Roboto_Mono:h10:cANSI:qDRAFT
     else
-      set guifont=JetBrains\ Mono\ NL\ 12
+      set guifont=Menlo\ Nerd\ Font\ 14
       " set guifont=TamzenForPowerline\ 14
       " set guifont=IBM\ Plex\ Mono\ 12
       " set guifont=Monego\ Nerd\ Font\ Fix 13
