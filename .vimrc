@@ -132,7 +132,7 @@ set number
 set norelativenumber
 set textwidth=0
 if exists('&colorcolumn')
-  set colorcolumn=74
+  set colorcolumn=80
 endif
 set backspace=indent,eol,start
 set list
@@ -194,10 +194,11 @@ set path+=**
 
 " ID Tags relative to current file + directory
 set tags=./tags;,tags;
-set tabstop=2
 
 " Indentation defaults (<< / >> / == / auto)
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 
 " Prefer spaces over tabs
 set expandtab
@@ -423,7 +424,7 @@ inoremap \ft <C-R>=strftime("%c")<CR>
 cnoremap w!! w !sudo tee % >/dev/null
 
 " goyo toggle
-nnoremap <Leader>g :Goyo<CR>
+nnoremap <Leader>g :Goyo 80<CR>
 
 " vim-easy-align
 " Start interactive EasyAlign in visual mode (e.g. vipga)
