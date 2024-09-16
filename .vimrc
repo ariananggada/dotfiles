@@ -61,6 +61,7 @@ silent! if plug#begin('~/.vim/plugged')
 
   " colors
   Plug 'morhetz/gruvbox'
+  Plug 'lifepillar/vim-gruvbox8'
 
   Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
@@ -299,16 +300,18 @@ if has('gui_running')
       " set guifont=Cousine\ 12
       " set guifont=Roboto\ Mono\ 10
     endif
-    let g:gruvbox_contrast_dark="soft"
-    colorscheme gruvbox
+    " let g:gruvbox_contrast_dark="soft"
+    " colorscheme gruvbox
+    colorscheme gruvbox8_soft
   catch
     redraw!
   endtry
 else
   set background=dark
   try
-    let g:gruvbox_contrast_dark="soft"
-    colorscheme gruvbox
+    " let g:gruvbox_contrast_dark="soft"
+    " colorscheme gruvbox
+    colorscheme gruvbox8_soft
   catch
     redraw!
   endtry
