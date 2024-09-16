@@ -4,7 +4,13 @@ source /opt/local/share/fzf/shell/completion.zsh
 source /opt/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /opt/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+eval "$(zoxide init zsh)"
+
 autoload -U colors && colors
+
+autoload -U compinit; compinit
+source ~/.local/zsh/plugins/fzf-tab/fzf-tab.plugin.zsh
+
 if [ -f "$HOME/.profile" ]; then
   . "$HOME/.profile"
 fi

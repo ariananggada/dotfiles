@@ -190,3 +190,12 @@ fi
 pf() {
   fzf --preview "bat --color=always --style=numbers --line-range=:500 {}"
 }
+
+
+gt() {
+  key="${1:-$HOME/.ssh/id_rsa}"
+  eval "$(ssh-agent)" \
+    && ssh-add "$key" \
+    && command gitui "${@:2}" \
+    && eval "$(ssh-agent -k)"
+}
