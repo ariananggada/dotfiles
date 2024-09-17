@@ -211,7 +211,7 @@ set ttimeoutlen=50
 
 set wildmenu
 set wildmode=longest,list,full
-set wildignore+=*.so,*~,*/.git/*,*/.svn/*,*/.DS_Store,*/tmp/*,*/venv/*
+set wildignore+=*.so,*~,*/.git/*,*/.svn/*,*/.DS_Store,/tmp/*,*/venv/*
 set wildignore+=*/node_modules/*
 set wildignore+=*cache*
 set wildignore+=*__pycache__*
