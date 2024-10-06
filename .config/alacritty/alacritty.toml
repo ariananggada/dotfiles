@@ -27,17 +27,21 @@ magenta = '#d3869b'
 cyan    = '#89b482'
 white   = '#d4be98'
 
+# settings below fix stutter issue on macos
+[window]
+opacity = 0.99
+
 [font]
 size = 14
   [font.normal]
-  family = "Menlo Nerd Font"
+  family = "DejaVuSansM Nerd Font"
   style = "Regular"
 
   [font.bold]
-  family = "Menlo Nerd Font"
+  family = "DejaVuSansM Nerd Font"
   style = "Bold"
 
   [font.italic]
-  family = "Menlo Nerd Font"
+  family = "DejaVuSansM Nerd Font"
   style = "Italic"
 
