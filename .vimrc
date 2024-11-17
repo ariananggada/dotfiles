@@ -53,6 +53,9 @@ silent! if plug#begin('~/.vim/plugged')
 
   Plug 'AndrewRadev/linediff.vim'
   Plug 'mbbill/undotree'
+  if !exists('g:undotree_WindowLayout')
+    let g:undotree_WindowLayout = 3
+  endif
 
   " tagbar
   Plug 'preservim/tagbar', { 'on': 'TagbarToggle' }
