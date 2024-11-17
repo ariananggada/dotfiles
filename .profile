@@ -148,3 +148,5 @@ fi
 # fzf
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 
+# fix for postgresql dependency
+export PATH="/opt/local/lib/postgresql16/bin:$PATH"
