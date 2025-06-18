@@ -111,6 +111,16 @@ silent! if plug#begin('~/.vim/plugged')
   " fancy stuff
   Plug 'chrisbra/Colorizer'
 
+  " Syntax highlighting for CJSON
+  Plug 'neoclide/jsonc.vim'
+
+  " zig
+  Plug 'ziglang/zig.vim'
+
+  " kcl-extension
+  Plug 'kcl-lang/kcl.nvim'
+
+
   call plug#end()
 endif
 " }}}
