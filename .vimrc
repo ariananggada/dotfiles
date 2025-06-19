@@ -277,7 +277,8 @@ if has('gui_running')
   set background=dark
   try
     if has('mac')
-      set guifont=Iosevka:h13
+      set guifont=DejaVuSansM Nerd Font:h12
+      " set guifont=Iosevka:h13
       " set guifont=TamzenForPowerline:h14
       " set guifont=IBM Plex Mono:h12
       " set guifont=Cousine:h11
@@ -287,7 +288,8 @@ if has('gui_running')
       " set guifont=Inconsolata:h14
       " set guifont=Monaco:h11
     elseif has('win32')
-      set guifont=Iosevka:h13:cANSI:qDRAFT
+      set guifont=DejaVuSansM_Nerd_Font:h13:cANSI:qDRAFT
+      " set guifont=Iosevka:h13:cANSI:qDRAFT
       " set guifont=TamzenForPowerline:h14:cANSI:qDRAFT
       " set guifont=IBM_Plex_Mono:h12:cANSI:qDRAFT
       " set guifont=Monego_Nerd_Font_Fix:h11:cANSI:qDRAFT
@@ -300,7 +302,8 @@ if has('gui_running')
       " set guifont=Cousine:h10:cANSI:qDRAFT
       " set guifont=Roboto_Mono:h10:cANSI:qDRAFT
     else
-      set guifont=Iosevka\ 13
+      set guifont=DejaVuSansM\ Nerd\ Font\ 12
+      " set guifont=Iosevka\ 13
       " set guifont=TamzenForPowerline\ 14
       " set guifont=IBM\ Plex\ Mono\ 12
       " set guifont=Monego\ Nerd\ Font\ Fix 13
