@@ -629,6 +629,16 @@ if v:version >= 800 && &runtimepath =~ 'coc.nvim'
   nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
   " Resume latest coc list
   nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+  "using :Buffers if exists after startup
+  augroup MyMappings
+    autocmd!
+    autocmd VimEnter * if exists(':Buffers') |
+      \   nnoremap <Leader>b :Buffers<CR> |
+      \ else |
+      \   nnoremap <Leader>b :buffer * |
+      \ endif
+  augroup END
 endif
 " }}}
 
