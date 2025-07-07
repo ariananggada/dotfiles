@@ -1,5 +1,7 @@
 PS1='%F{blue}%B%~%b%f %F{green}❯%f '
 
+setopt share_history
+
 eval "$(starship init zsh)"
 source /opt/local/share/fzf/shell/key-bindings.zsh
 source /opt/local/share/fzf/shell/completion.zsh
