@@ -21,10 +21,6 @@ let $MYVIMDIR="~/.vim"
 set runtimepath^=$HOME/.vim runtimepath+=$HOME/.vim/after
 
 
-
-
-
-
 " Vim Package {
 silent! if plug#begin('~/.vim/plugged')
   Plug 'tpope/vim-sensible'
@@ -264,11 +260,6 @@ endif
 " }}}
 
 
-
-
-
-
-
 " Colorscheme {{{
 syntax enable
 if has('gui_running')
@@ -338,9 +329,6 @@ else
   endtry
 endif
 " }}}
-
-
-
 
 
 " Keyboard Mappings {{{
@@ -462,7 +450,6 @@ nnoremap \r :Rg<CR>
 " }}}
 
 
-
 " Autocommands {{{
 augroup vimrc
   autocmd!
@@ -474,13 +461,11 @@ augroup END
 " }}}
 
 
-
 " Plugin settings {{{
 " netrw
 let g:netrw_browse_split = 4
 let g:netrw_liststyle=3 " set default netrw default style to tree style
 " }}}
-
 
 
 " Commands {{{
@@ -500,9 +485,6 @@ command! EX if !empty(expand('%'))
 " Scratch Buffer
 command! SC vnew | setlocal nobuflisted buftype=nofile bufhidden=wipe noswapfile
 " }}}
-
-
-
 
 
 " Functions {{{
@@ -538,8 +520,6 @@ endfunction
 command! -nargs=* -complete=file O :exe s:open(<f-args>)
 
 " }}}
-
-
 
 
 " Status line {{{
