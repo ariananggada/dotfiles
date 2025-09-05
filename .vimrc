@@ -447,6 +447,15 @@ nmap ga <Plug>(EasyAlign)
 
 " search in root project directory
 nnoremap \r :Rg<CR>
+
+" auto pair / auto close mapping
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
 " }}}
 
 
