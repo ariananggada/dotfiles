@@ -29,6 +29,7 @@ CODE_EXTENSIONS = {
     ".pp", ".f", ".f90", ".f95", ".jl", ".elm", ".clj", ".cljs", ".ex",
     ".exs", ".erl", ".hrl", ".nim", ".nims", ".ml", ".mli", ".fs", ".fsx",
     ".fsi", ".vb", ".v", ".sv", ".svh", ".t", ".svp", ".groovy", ".gradle",
+    ".json", ".yml", ".yaml", ".toml", ".env",
 }
 
 SKIP_FOLDERS = {
