@@ -30,7 +30,7 @@ if [[ "${OS}" == "Linux" ]] ||
       fi
   fi
 
-  export PATH=$HOME/bin:$HOME/.local/bin:$PATH
+  export PATH=$HOME/bin:$HOME/.local/bin:$HOME/.local/script:$PATH
 
   if [[ "${OS}" != "Darwin" ]]; then
     export LC_ALL=en_US.UTF-8  

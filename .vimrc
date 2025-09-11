@@ -23,8 +23,10 @@ set runtimepath^=$HOME/.vim runtimepath+=$HOME/.vim/after
 
 " Vim Package {
 silent! if plug#begin('~/.vim/plugged')
+  Plug 'LunarWatcher/auto-pairs'
   Plug 'tpope/vim-sensible'
   Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-unimpaired'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-commentary'
   " Plug 'tpope/vim-eunuch'
@@ -448,15 +450,15 @@ nmap ga <Plug>(EasyAlign)
 " search in root project directory
 nnoremap \r :Rg<CR>
 
-" auto pair / auto close mapping
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
-inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
-" }}}
+" " auto pair / auto close mapping
+" inoremap " ""<left>
+" inoremap ' ''<left>
+" inoremap ( ()<left>
+" inoremap [ []<left>
+" inoremap { {}<left>
+" inoremap {<CR> {<CR>}<ESC>O
+" inoremap {;<CR> {<CR>};<ESC>O
+" " }}}
 
 
 " Autocommands {{{

@@ -49,3 +49,6 @@ if [ -f '/Users/arian/.local/bin/google-cloud-sdk/path.zsh.inc' ]; then . '/User
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/arian/.local/bin/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/arian/.local/bin/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Added by Windsurf
+export PATH="/Users/arian/.codeium/windsurf/bin:$PATH"

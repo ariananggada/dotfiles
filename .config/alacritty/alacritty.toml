@@ -1,3 +1,9 @@
+# this is my minimal alacritty config
+
+# # cheatsheet
+# to enter vi mode, you could use:
+# `ctrl-shift-space`
+
 # Colors (Gruvbox Material Medium Dark)
 
 # Default colors
@@ -30,18 +36,22 @@ white   = '#d4be98'
 # settings below fix stutter issue on macos
 [window]
 opacity = 0.99
+padding = {x = 4, y = 4}
+
+[scrolling]
+history = 100000
 
 [font]
-size = 14
+size = 12
   [font.normal]
-  family = "DejaVuSansM Nerd Font"
+  family = "SFMono Nerd Font"
   style = "Regular"
 
   [font.bold]
-  family = "DejaVuSansM Nerd Font"
+  family = "SFMono Nerd Font"
   style = "Bold"
 
   [font.italic]
-  family = "DejaVuSansM Nerd Font"
+  family = "SFMono Nerd Font"
   style = "Italic"
 
