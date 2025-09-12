@@ -1,18 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-dumpcode.py – Dump seluruh file kode ke SATU berkas teks utuh tanpa memotong isi.
-Final version: atomik, streaming, presisi ukuran, aman untuk file raksasa.
+dumpcode-fmt-final.py – Dump kode ke SATU berkas dengan format:
+========================================
+=== namafile.ext ===
+========================================
+isi kode langsung dimulai tanpa newline di atasnya
 Usage:
-    python dumpcode.py ROOT [options]
-Options:
-    --only SUB          Hanya proses sub-folder tertentu
-    --max-size N        Maksimum ukuran output (MB) default 50
-    --out DIR           Folder keluaran (default: cwd)
-Output:
-    dump_code-<ROOT_FOLDER>.txt
-Setiap file kode ditulis utuh; tidak akan terpotong di tengah.
+    python dumpcode-fmt-final.py ROOT [options]
 """
+
 from __future__ import annotations
 import os
 import sys
@@ -29,7 +26,6 @@ CODE_EXTENSIONS = {
     ".pp", ".f", ".f90", ".f95", ".jl", ".elm", ".clj", ".cljs", ".ex",
     ".exs", ".erl", ".hrl", ".nim", ".nims", ".ml", ".mli", ".fs", ".fsx",
     ".fsi", ".vb", ".v", ".sv", ".svh", ".t", ".svp", ".groovy", ".gradle",
-    ".json", ".yml", ".yaml", ".toml", ".env",
 }
 
 SKIP_FOLDERS = {
@@ -39,12 +35,10 @@ SKIP_FOLDERS = {
     ".nuxt", ".svelte-kit", "vendor", ".bundle", ".sass-cache",
 }
 
-CHUNK_SIZE = 1 << 20  # 1 MiB streaming
+CHUNK_SIZE = 1 << 20
 
 
-# ---------- util ----------
 def is_binary(path: Path) -> bool:
-    """True kalau tampak berisi null-byte di awal."""
     try:
         with path.open("rb") as f:
             return b"\0" in f.read(1024)
@@ -56,26 +50,49 @@ def should_skip_dir(name: str) -> bool:
     return name.lower() in SKIP_FOLDERS
 
 
-def safe_size(path: Path) -> int:
-    """Ukuran sebenarnya di disk (follow symlink = False)."""
-    try:
-        return path.stat(follow_symlinks=False).st_size
-    except Exception:
-        return 0
+def build_atoms(root: Path, base: Path) -> list[tuple[str, int]]:
+    atoms: list[tuple[str, int]] = []
+    for dirpath, dirnames, filenames in os.walk(base, followlinks=False):
+        dp = Path(dirpath)
+        rel_dp = dp.relative_to(root)
+        if any(p.startswith(".") for p in rel_dp.parts):
+            dirnames[:] = []
+            continue
+        for s in list(dirnames):
+            if should_skip_dir(s):
+                dirnames.remove(s)
+
+        for fname in filenames:
+            fp = dp / fname
+            ext = fp.suffix.lower()
+            if ext not in CODE_EXTENSIONS:
+                continue
+            if not fp.is_file() or fp.is_symlink():
+                continue
+            if is_binary(fp):
+                continue
+
+            rel_file = fp.relative_to(root).as_posix()
+            # PENTING: tanpa newline setelah header kedua
+            header = f"========================================\n=== {rel_file} ===\n========================================\n"
+            try:
+                with fp.open("r", encoding="utf-8", errors="strict") as f:
+                    content = f.read()
+            except UnicodeDecodeError:
+                continue
+
+            block = header + content
+            atoms.append((block, len(block.encode("utf-8"))))
+    return atoms
 
 
-def atomically_write_atom(out_path: Path, max_bytes: int, atoms: list[tuple[str, int]]):
-    """
-    atoms: [(blok_string, byte_len), ...]
-    Jika total byte_len > max_bytes -> keluar sebelum menulis.
-    Menulis secara streaming per blok; tetap utuh per atom.
-    """
+def atomically_write(out_path: Path, max_bytes: int, atoms: list[tuple[str, int]]):
     total = sum(b for _, b in atoms)
     if total > max_bytes:
         print(
             f"Error: total calon output ({total / 1e6:.2f} MB) "
             f"melebihi --max-size ({max_bytes / 1e6:.2f} MB).\n"
-            "Silakan naikkan --max-size atau batasi dengan --only.",
+            "Silakan naikkan --max-size atau gunakan --only.",
             file=sys.stderr,
         )
         sys.exit(2)
@@ -84,7 +101,6 @@ def atomically_write_atom(out_path: Path, max_bytes: int, atoms: list[tuple[str,
     try:
         with tmp.open("w", encoding="utf-8") as f:
             for blk, _ in atoms:
-                # streaming write agar RAM tetap rendah
                 for i in range(0, len(blk), CHUNK_SIZE):
                     f.write(blk[i : i + CHUNK_SIZE])
         tmp.replace(out_path)
@@ -96,7 +112,6 @@ def atomically_write_atom(out_path: Path, max_bytes: int, atoms: list[tuple[str,
         raise e
 
 
-# ---------- signal handler ----------
 class CleanExit:
     def __init__(self, path: Path):
         self.path = path
@@ -112,48 +127,8 @@ class CleanExit:
         sys.exit(130)
 
 
-# ---------- core ----------
-def build_atoms(root: Path, base: Path) -> list[tuple[str, int]]:
-    atoms: list[tuple[str, int]] = []
-    for dirpath, dirnames, filenames in os.walk(base, followlinks=False):
-        dp = Path(dirpath)
-        rel_dp = dp.relative_to(root)
-
-        # skip hidden
-        if any(p.startswith(".") for p in rel_dp.parts):
-            dirnames[:] = []
-            continue
-        # skip folder sampah
-        for s in list(dirnames):
-            if should_skip_dir(s):
-                dirnames.remove(s)
-
-        for fname in filenames:
-            fp = dp / fname
-            ext = fp.suffix.lower()
-            if ext not in CODE_EXTENSIONS:
-                continue
-            if not fp.is_file() or fp.is_symlink():
-                continue
-            if is_binary(fp):
-                continue
-
-            rel = fp.relative_to(root).as_posix()
-            header = f"===== {rel} =====\n"
-
-            try:
-                with fp.open("r", encoding="utf-8", errors="strict") as f:
-                    content = f.read()
-            except UnicodeDecodeError:
-                continue
-
-            block = header + content + "\n"
-            atoms.append((block, len(block.encode("utf-8"))))
-    return atoms
-
-
 def main():
-    parser = argparse.ArgumentParser(description="Dump kode utuh ke satu berkas teks.")
+    parser = argparse.ArgumentParser(description="Dump kode ke satu berkas dengan format persis  (tanpa newline setelah header).")
     parser.add_argument("root", help="Root folder proyek")
     parser.add_argument("--only", help="Hanya proses sub-folder tertentu")
     parser.add_argument("--max-size", type=int, default=50, help="Maksimum MB output (default 50)")
@@ -176,17 +151,13 @@ def main():
     out_dir.mkdir(exist_ok=True)
     out_file = out_dir / f"dump_code-{root.name}.txt"
 
-    # Bangun daftar atom di memori sambil hitung total
     atoms = build_atoms(root, base)
     if not atoms:
         print("Tidak ada file kode yang ditemukan.", file=sys.stderr)
         sys.exit(0)
 
-    # pasang handler Ctrl-C
     cleaner = CleanExit(out_file)
-
-    # tulis atomik
-    atomically_write_atom(out_file, args.max_size * 1_000_000, atoms)
+    atomically_write(out_file, args.max_size * 1_000_000, atoms)
 
     total_bytes = sum(b for _, b in atoms)
     print(f"Selesai. Output: {out_file}  ({total_bytes / 1e6:.2f} MB)")
