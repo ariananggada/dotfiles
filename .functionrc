@@ -137,6 +137,10 @@ gt() {
     && eval "$(ssh-agent -k)"
 }
 
+zip_clean() {
+    zip -r $1 $2 -x "*.git*" -x "*.DS_Store"
+}
+
 # Alias for macOS compatibility
 if [ "$(uname)" = 'Darwin' ]; then
   alias tac='tail -r'
