@@ -138,7 +138,7 @@ gt() {
 }
 
 zip_clean() {
-    zip -r $1 $2 -x "*.git*" -x "*.DS_Store"
+    zip -r $1 $2 -x "*.git" -x "*.DS_Store"
 }
 
 # Alias for macOS compatibility
