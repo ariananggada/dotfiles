@@ -26,6 +26,7 @@ CODE_EXTENSIONS = {
     ".pp", ".f", ".f90", ".f95", ".jl", ".elm", ".clj", ".cljs", ".ex",
     ".exs", ".erl", ".hrl", ".nim", ".nims", ".ml", ".mli", ".fs", ".fsx",
     ".fsi", ".vb", ".v", ".sv", ".svh", ".t", ".svp", ".groovy", ".gradle",
+    ".tf", ".hcl", ".md",
 }
 
 SKIP_FOLDERS = {
@@ -65,8 +66,8 @@ def build_atoms(root: Path, base: Path) -> list[tuple[str, int]]:
         for fname in filenames:
             fp = dp / fname
             ext = fp.suffix.lower()
-            if ext not in CODE_EXTENSIONS:
-                continue
+            # if ext not in CODE_EXTENSIONS:
+            #     continue
             if not fp.is_file() or fp.is_symlink():
                 continue
             if is_binary(fp):

@@ -54,6 +54,10 @@ ALLOWED_EXTENSIONS = {
     '.vue', '.svelte', '.astro', '.clj', '.cljs', '.edn',
     # Makefile, Dockerfile, dsb
     '.mk', '.makefile', 'makefile', 'dockerfile', 'Dockerfile',
+    # Markdown
+    '.md',
+    # Terraform
+    '.hcl', '.tf'
 }
 
 BLOCKED_EXTENSIONS = {
@@ -157,8 +161,8 @@ def dump_project_code(root_dir, output_file):
             ext = file_path.suffix.lower()
             if ext in BLOCKED_EXTENSIONS:
                 continue
-            if ext not in ALLOWED_EXTENSIONS and ext != '':
-                continue
+            # if ext not in ALLOWED_EXTENSIONS and ext != '':
+            #     continue
 
             if not is_text_file(file_path):
                 continue
