@@ -44,14 +44,14 @@ history = 100000
 [font]
 size = 12
   [font.normal]
-  family = "SFMono Nerd Font"
+  family = "Mononoki Nerd Font"
   style = "Regular"
 
   [font.bold]
-  family = "SFMono Nerd Font"
+  family = "Mononoki Nerd Font"
   style = "Bold"
 
   [font.italic]
-  family = "SFMono Nerd Font"
+  family = "Mononoki Nerd Font"
   style = "Italic"
 

@@ -52,3 +52,5 @@ if [ -f '/Users/arian/.local/bin/google-cloud-sdk/completion.zsh.inc' ]; then . 
 
 # Added by Windsurf
 export PATH="/Users/arian/.codeium/windsurf/bin:$PATH"
+
+export PATH="/usr/local/bin:$PATH"
