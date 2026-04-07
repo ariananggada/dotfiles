@@ -73,11 +73,11 @@ silent! if plug#begin('~/.vim/plugged')
   Plug 'junegunn/goyo.vim'
   Plug 'junegunn/vim-easy-align'
 
-  Plug 'SirVer/ultisnips'
-  let g:UltiSnipsExpandTrigger = '<Nop>'
-  let g:UltiSnipsJumpForwardTrigger = '<Nop>'
-  let g:UltiSnipsJumpBackwardTrigger = '<Nop>'
-  let g:UltiSnipsEditSplit = 'vertical'
+  " Plug 'SirVer/ultisnips'
+  " let g:UltiSnipsExpandTrigger = '<Nop>'
+  " let g:UltiSnipsJumpForwardTrigger = '<Nop>'
+  " let g:UltiSnipsJumpBackwardTrigger = '<Nop>'
+  " let g:UltiSnipsEditSplit = 'vertical'
 
   Plug 'honza/vim-snippets'
 

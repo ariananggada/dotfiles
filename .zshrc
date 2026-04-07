@@ -36,9 +36,10 @@ fi
 # fnm
 FNM_PATH="/Users/arian/.local/share/fnm"
 if [ -d "$FNM_PATH" ]; then
-  export PATH="/Users/arian/.local/share/fnm:$PATH"
-  eval "`fnm env`"
+  export PATH="$FNM_PATH:$PATH"
+  eval "$(fnm env --shell zsh)"
 fi
+
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -54,3 +55,6 @@ if [ -f '/Users/arian/.local/bin/google-cloud-sdk/completion.zsh.inc' ]; then . 
 export PATH="/Users/arian/.codeium/windsurf/bin:$PATH"
 
 export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/kclvm/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+
