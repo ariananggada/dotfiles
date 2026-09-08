@@ -30,7 +30,7 @@ if [[ "${OS}" == "Linux" ]] ||
       fi
   fi
 
-  export PATH=$HOME/bin:$HOME/.local/bin:$PATH
+  export PATH=$HOME/bin:$HOME/.local/bin:$HOME/.local/script:$PATH
 
   if [[ "${OS}" != "Darwin" ]]; then
     export LC_ALL=en_US.UTF-8  
@@ -139,9 +139,14 @@ if [[ "${OS}" == "Linux" ]] ||
     export PATH="/opt/local/bin:/opt/local/sbin:$PATH" 
   fi
 
+  if [[ "${OS}" == "Darwin" ]]; then
+    export PATH="$HOME/Library/Python/3.10/bin:$PATH"
+  fi
 
 fi
 
 # fzf
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 
+# fix for postgresql dependency
+export PATH="/opt/local/lib/postgresql16/bin:$PATH"
